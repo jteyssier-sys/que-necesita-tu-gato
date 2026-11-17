@@ -3,13 +3,14 @@
 <head>
 <!--
 ==========================================================================
- LANDING GATOS · PUPPIS  —  versión IFRAME (VTEX) · VARIANTE MOBILE v2 (body.mv2)
+ LANDING GATOS · PUPPIS  —  versión IFRAME (VTEX)
  Diseño: Figma "Untitled" (node 1:2) · desktop 1440 + mobile 390
 ==========================================================================
 
  CÓMO VIVE
    Se publica en GitHub Pages (mismo esquema que /puppis-club y
-   /formas-de-entrega) y se embebe en puppis.com.ar/gato con un iframe.
+   /formas-de-entrega) y se embebe en puppis.com.ar/que-necesita-tu-gato con un iframe.
+   Es una página NUEVA: no reemplaza a /gato (que sigue igual).
    Las imágenes van en la carpeta img/ al lado de este archivo.
 
  LO QUE YA RESUELVE PARA EL IFRAME
@@ -36,16 +37,16 @@
 
  ANTES DE PUBLICAR
    1. Buscar "TODO:" en este archivo (links reales, copy a confirmar).
-   2. SEO: en la página nativa de VTEX (/gato) poner H1, title, meta y el
+   2. SEO: en la página nativa de VTEX (/que-necesita-tu-gato) poner H1, title, meta y el
       JSON-LD de FAQ. Dentro del iframe NO suman para puppis.com.ar.
 ==========================================================================
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, indexifembedded">
-<title>¿Qué necesita tu gato? Alimento, Salud y Accesorios | Puppis</title>
-<meta name="description" content="Contanos qué le pasa a tu gato -urinario, esterilizado, ansioso, bolas de pelo, senior- y te mostramos exactamente qué comprar, recomendado por veterinarios.">
-<link rel="canonical" href="https://www.puppis.com.ar/gato">
+<title>¿Qué necesita tu gato? Alimento y cuidados por etapa | Puppis</title>
+<meta name="description" content="Urinario, esterilizado, sobrepeso, bolas de pelo, gatito o senior: elegí la situación de tu gato y te decimos qué darle, con aval veterinario.">
+<link rel="canonical" href="https://www.puppis.com.ar/que-necesita-tu-gato">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,8 +119,6 @@
   .btn-primary:hover{ transform:translateY(-1px); box-shadow:0 5px 5px rgba(244,124,115,.25); }
   .btn-outline{ background:var(--white); color:var(--blue); border-color:var(--blue); padding:17px 26px; font-size:.95rem; }
   .btn-outline:hover{ background:var(--blue); color:var(--white); }
-  .btn-coral{ background:var(--coral-btn); color:var(--white); padding:13px 28px; font-size:.95rem; }
-  .btn-coral:hover{ background:var(--coral); }
   .btn-sm{ padding:13px 24px; font-size:.92rem; }
 
   /* ---------- REVEAL ---------- */
@@ -242,8 +241,9 @@
   .btn-wa{ background:var(--green-wa); color:var(--white); font-size:1.25rem; padding:19px 46px; box-shadow:0 3px 5px rgba(63,124,186,.38); }
   .btn-wa:hover{ background:#19a94f; transform:translateY(-1px); }
 
-  /* ---------- POR QUÉ PUPPIS + CAPTURA ---------- */
+  /* ---------- POR QUÉ PUPPIS ---------- */
   .why{ padding:46px 0 70px; }
+  @media (min-width:1241px){ .why{ padding-bottom:150px; } } /* deja lugar al gato siamés, que ahora cierra la landing */
   .why .container{ max-width:1180px; }
   .why-title{ text-align:center; color:var(--blue-dark); font-size:2.125rem; line-height:1.15; }
   .why-cat{ position:absolute; width:553px; left:-537px; top:-52px; pointer-events:none; transform:scaleX(-1); }
@@ -260,50 +260,6 @@
   .why-card b{ display:block; font-weight:900; font-size:.906rem; color:var(--blue-dark); line-height:1.38; }
   .why-card p{ font-size:.75rem; color:var(--text-card); margin-top:4px; line-height:1.33; }
 
-  .capture-bar{
-    margin-top:28px; background:var(--bg-capture); border-radius:16px;
-    display:flex; align-items:center; gap:28px; padding:22px 28px; flex-wrap:wrap; min-height:106px;
-  }
-  .capture-bar p{ font-size:.906rem; color:#20232f; line-height:1.38; flex:1 1 320px; }
-  .capture-bar b{ display:block; font-weight:900; font-size:1.4375rem; color:var(--blue-dark); line-height:1.38; }
-  .capture-form{ display:flex; gap:22px; margin-left:auto; align-items:center; flex-wrap:wrap; }
-  .capture-form input{
-    width:254px; height:46px; padding:0 16px; border-radius:999px; border:1px solid var(--blue-light);
-    font-size:.875rem; font-family:inherit; outline:none; color:var(--blue-dark); background:var(--white);
-  }
-  .capture-form input:focus{ border-color:var(--blue); }
-  .capture-form .btn{ width:171px; height:46px; padding:0; font-size:.9375rem; letter-spacing:0; }
-
-  /* ---------- MÁS VENDIDOS ---------- */
-  .bestsellers{ background:var(--bg-soft); padding:60px 0 64px; }
-  .section-head-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:36px; }
-  .shelf{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
-  .s-card{
-    position:relative; background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
-    padding:16px; box-shadow:var(--shadow-soft); display:flex; flex-direction:column;
-    transition:box-shadow .18s, transform .18s;
-  }
-  .s-card:hover{ box-shadow:var(--shadow); transform:translateY(-3px); }
-  .s-ph{ height:104px; background:var(--bg-soft); border-radius:14px; display:grid; place-items:center; font-size:2rem; }
-  .s-badge{ position:absolute; top:24px; left:24px; background:var(--coral); color:var(--white); font-size:.68rem; font-weight:900; padding:4px 11px; border-radius:999px; }
-  .s-brand{ font-size:.65rem; color:var(--blue); text-transform:uppercase; letter-spacing:.08em; font-weight:900; margin:14px 0 0; }
-  .s-name{ font-size:.88rem; font-weight:700; line-height:1.35; margin:5px 0 10px; }
-  .s-price{ font-size:1.25rem; font-weight:900; color:var(--blue-dark); margin:auto 0 0; }
-  .s-cta{ display:block; text-align:center; background:var(--blue-dark); color:var(--white); font-size:.82rem; font-weight:900; letter-spacing:.5px; border-radius:999px; padding:11px; margin-top:12px; }
-  .s-cta:hover{ background:#123f76; }
-  .bestsellers .btn-coral--mobile{ display:none; }
-
-  /* ---------- FAQ ---------- */
-  .faq{ padding:70px 0 80px; }
-  .accordion{ max-width:900px; margin:0 auto; }
-  .acc-item{ background:var(--bg-soft); border:1px solid transparent; border-radius:var(--radius); padding:0 8px; margin-bottom:14px; box-shadow:var(--shadow-soft); transition:border-color .18s; }
-  .acc-item[open]{ border-color:var(--blue); background:var(--white); }
-  .acc-item summary{ list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 18px; font-weight:800; font-size:1.02rem; color:var(--blue-dark); }
-  .acc-item summary::-webkit-details-marker{ display:none; }
-  .acc-item .chev{ flex-shrink:0; width:22px; height:22px; transition:transform .2s; }
-  .acc-item[open] .chev{ transform:rotate(180deg); }
-  .acc-item p{ margin:0 0 22px; padding:0 18px; font-size:.95rem; line-height:1.6; }
-
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:1240px){
     .why-cat{ display:none; }
@@ -317,7 +273,6 @@
   @media (max-width:960px){
     .hero-cat{ width:420px; right:-50px; top:-241px; }
     .chips{ grid-template-columns:repeat(2,1fr); }
-    .shelf{ grid-template-columns:repeat(2,1fr); }
     .why-grid{ grid-template-columns:repeat(2,1fr); }
   }
   @media (max-width:800px){
@@ -396,46 +351,72 @@
     .dots{ display:flex; gap:8px; justify-content:center; margin-top:12px; }
     .dots button{ width:12px; height:12px; padding:0; border-radius:50%; background:var(--blue-light); border:1px solid var(--blue-light); }
     .dots button.is-on{ border-color:var(--blue-dark); }
-    .capture-bar{ flex-direction:column; align-items:stretch; padding:24px 18px; gap:18px; }
-    .capture-bar p{ flex:none; color:var(--blue-dark); }
-    .capture-bar b{ font-size:1.2rem; line-height:1.25; margin-bottom:6px; }
-    .capture-form{ margin-left:0; flex-direction:column; gap:12px; }
-    .capture-form input, .capture-form .btn{ width:100%; }
 
-    .bestsellers{ padding:44px 0 30px; }
-    .section-head-row .btn-coral{ display:none; }
-    .bestsellers .btn-coral--mobile{ display:inline-block; margin-top:20px; }
-    .shelf{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:14px; margin:0 -18px; padding:2px 18px 10px; scroll-padding:0 18px; scrollbar-width:none; }
-    .shelf::-webkit-scrollbar{ display:none; }
-    .s-card{ flex:0 0 88%; scroll-snap-align:center; }
 
-    .faq .section-title{ font-size:1.6rem; }
-    .acc-item summary{ font-size:.92rem; padding:18px 14px; }
   }
-  /* ===== VARIANTE MOBILE v2 (se activa con <body class="mv2">) =====
-     Chips en grilla de 2 columnas sin bajada + "¿Por qué elegir Puppis?" 2x2.
-     landing-gatos-mobile-v2.html es este mismo archivo con body.mv2. */
-  @media (max-width:600px){    body.mv2 .chips{ display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow:visible; margin:28px 0 0; padding:0; }
-    body.mv2 .chip{
+  /* ---------- MIX FEEDING · card mobile (≤800px) ---------- */
+  .mix-mobile{ display:none; }
+  @media (max-width:800px){
+    .mix-band{ display:none; }
+    .mix-mobile{ display:block; }
+    .mix-card{
+      max-width:480px; margin:28px auto 0; background:var(--bg-capture); border-radius:18px;
+      padding:24px 18px 22px; text-align:center; box-shadow:var(--shadow);
+    }
+    .mix-card .guia{ font-size:1.15rem; padding-bottom:6px; margin-bottom:14px; }
+    .mix-card__title{ font-size:1.55rem; line-height:1.15; color:var(--blue-dark); }
+    .mix-card__title span{ color:var(--blue); }
+    .mix-card__bowl{ width:300px; height:auto; max-width:100%; margin:4px auto 0; }
+    .mix-legend{ display:flex; gap:18px; justify-content:center; margin:6px 0 14px; }
+    .mix-legend span{
+      display:inline-flex; align-items:center; gap:6px; font-size:.7rem; font-weight:900;
+      letter-spacing:.08em; text-transform:uppercase; color:var(--blue-dark);
+    }
+    .mix-legend span::before{ content:""; width:8px; height:8px; border-radius:2px; }
+    .mix-legend .hum::before{ background:var(--blue-dark); }
+    .mix-legend .sec::before{ background:var(--yellow-soft); }
+    .mix-pills{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .mix-pills li{
+      position:relative; display:flex; align-items:center; min-height:40px; border-radius:10px;
+      padding:8px 10px 8px 36px; text-align:left; font-size:.78rem; font-weight:900; line-height:1.15;
+    }
+    .mix-pills li::before{
+      content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; border-radius:50%; background:var(--blue) url("img/ico-check.svg") center/12px no-repeat;
+    }
+    .mix-pills .hum{ background:var(--blue-dark); color:var(--white); }
+    .mix-pills .sec{ background:var(--yellow-soft); color:var(--blue-dark); }
+    /* "Armá su combo mixto" pasa a link de texto; Ver húmedos / Ver secos lado a lado */
+    .mix-foot{ padding-top:22px; gap:12px; }
+    .mix-foot .btn-primary{
+      flex-basis:100%; background:none; box-shadow:none; padding:4px 0; font-size:1rem; color:var(--blue-dark);
+    }
+    .mix-foot .btn-primary:hover{ transform:none; box-shadow:none; text-decoration:underline; }
+    .mix-foot .btn-outline{ padding:13px 26px; }
+  }
+  /* ===== MOBILE (versión elegida, ex "v2") =====
+     Chips en grilla de 2 columnas sin bajada + "¿Por qué elegir Puppis?" 2x2. */
+  @media (max-width:600px){    .chips{ display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow:visible; margin:28px 0 0; padding:0; }
+    .chip{
       flex:none; min-height:60px; padding:10px 10px; display:grid; grid-template-columns:40px 1fr;
       column-gap:10px; align-items:center; text-align:left; border-radius:14px;
     }
-    body.mv2 .chip:hover{ transform:none; }
-    body.mv2 .chip .tile{ grid-row:span 2; width:40px; height:40px; border-radius:10px; }
-    body.mv2 .chip .tile img{ transform:scale(.72); }
-    body.mv2 .chip .tile{ grid-row:auto; }
-    body.mv2 .chip .t{ margin:0; font-size:.84rem; line-height:1.15; }
-    body.mv2 .chip .s{ display:none; } /* la bajada se ve en el módulo; acá suma alto sin ayudar a elegir */
-    body.mv2 .dots[data-for=".chips"], body.mv2 .dots[data-for=".why-grid"]{ display:none; }
-    body.mv2 .why-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow:visible; margin:22px 0 0; padding:0; }
-    body.mv2 .why-card{ flex:none; min-height:0; padding:16px 8px 14px; }
-    body.mv2 .why-ic{ transform:scale(.85); margin-bottom:4px; }
-    body.mv2 .why-card b{ font-size:.82rem; }
-    body.mv2 .why-card p{ font-size:.68rem; }
+    .chip:hover{ transform:none; }
+    .chip .tile{ grid-row:span 2; width:40px; height:40px; border-radius:10px; }
+    .chip .tile img{ transform:scale(.72); }
+    .chip .tile{ grid-row:auto; }
+    .chip .t{ margin:0; font-size:.84rem; line-height:1.15; }
+    .chip .s{ display:none; } /* la bajada se ve en el módulo; acá suma alto sin ayudar a elegir */
+    .dots[data-for=".chips"], .dots[data-for=".why-grid"]{ display:none; }
+    .why-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow:visible; margin:22px 0 0; padding:0; }
+    .why-card{ flex:none; min-height:0; padding:16px 8px 14px; }
+    .why-ic{ transform:scale(.85); margin-bottom:4px; }
+    .why-card b{ font-size:.82rem; }
+    .why-card p{ font-size:.68rem; }
   }
 </style>
 </head>
-<body class="no-js mv2">
+<body class="no-js">
 <main>
 
 <!-- =================== HERO =================== -->
@@ -672,6 +653,20 @@
       <img class="mix-bowl" src="img/bowl-mix.webp" width="447" height="250" alt="Plato con alimento húmedo y seco para gatos">
     </div>
   </div>
+  <!-- Versión mobile (≤800px) del bloque: card única con plato, leyenda y beneficios en 2 columnas -->
+  <div class="container mix-mobile">
+    <div class="mix-card">
+      <span class="guia">Alimentación mixta</span>
+      <h3 class="mix-card__title">Húmedo + seco:<br><span>Un plato más completo</span></h3>
+      <img class="mix-card__bowl" src="img/bowl-mix.webp" width="447" height="250" alt="Plato con alimento húmedo y seco para gatos" loading="lazy">
+      <div class="mix-legend" aria-hidden="true"><span class="hum">Húmedo</span><span class="sec">Seco</span></div>
+      <ul class="mix-pills">
+        <li class="hum">Hidratación extra</li><li class="sec">Salud dental</li>
+        <li class="hum">Más sabor</li><li class="sec">Control de peso</li>
+        <li class="hum">Fácil de comer</li><li class="sec">Más práctico</li>
+      </ul>
+    </div>
+  </div>
   <!-- TODO: links reales -->
   <div class="container mix-foot">
     <a href="https://www.puppis.com.ar/gato" class="btn btn-primary">Armá su combo mixto</a>
@@ -692,8 +687,8 @@
   </div>
 </section>
 
-<!-- =================== POR QUÉ PUPPIS + CAPTURA =================== -->
-<section class="why" id="capture">
+<!-- =================== POR QUÉ PUPPIS =================== -->
+<section class="why" id="por-que-puppis">
   <div class="container">
     <img class="why-cat" src="img/gato-siames.webp" width="553" height="464" alt="" aria-hidden="true">
     <h2 class="why-title reveal">¿Por qué elegir Puppis?</h2>
@@ -718,66 +713,10 @@
     </div>
     <div class="dots" data-for=".why-grid" aria-hidden="true"></div>
 
-    <div class="capture-bar reveal">
-      <p><b>15% OFF en tu primera compra</b>sumate al club y recib&iacute; recomendaciones para tu michi</p>
-      <!-- TODO: hoy el form manda a /registro-puppis-club (no guarda el mail). Definir si se integra con el club. -->
-      <form class="capture-form" action="https://www.puppis.com.ar/registro-puppis-club" method="get" target="_top">
-        <input type="email" name="email" required placeholder="tu@email.com" aria-label="Tu email">
-        <button type="submit" class="btn btn-coral">Registrarme</button>
-      </form>
-    </div>
   </div>
 </section>
 
 <!-- =================== MÁS VENDIDOS =================== -->
-<!-- TODO: precios fijos en el código. Reemplazar por shelf nativo de VTEX o actualizar antes de publicar. -->
-<section id="masvendidos" class="bestsellers">
-  <div class="container">
-    <div class="section-head-row">
-      <h2 class="section-title">Los más<br><span class="text-blue-dark">vendidos</span></h2>
-      <a href="https://www.puppis.com.ar/gato" class="btn btn-coral btn-sm">Ver todo el catálogo</a>
-    </div>
-    <div class="shelf">
-      <div class="s-card"><div class="s-ph" aria-hidden="true">🍗</div><p class="s-brand">Excellent</p><p class="s-name">Gato Adulto Pollo y Arroz 7,5 kg</p><p class="s-price">$ 70.100</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
-      <div class="s-card"><span class="s-badge">6x5</span><div class="s-ph" aria-hidden="true">🐟</div><p class="s-brand">Pro Plan</p><p class="s-name">Pouch Gato Adulto Salmón 85 g</p><p class="s-price">$ 3.200</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
-      <div class="s-card"><div class="s-ph" aria-hidden="true">🪨</div><p class="s-brand">Sanicat</p><p class="s-name">Piedras Strong Clumps 7 kg</p><p class="s-price">$ 14.400</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
-      <div class="s-card"><div class="s-ph" aria-hidden="true">🧶</div><p class="s-brand">Pawise</p><p class="s-name">Rascador Torre Esquina XL</p><p class="s-price">$ 53.000</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
-    </div>
-    <div class="dots" data-for=".shelf" aria-hidden="true"></div>
-    <a href="https://www.puppis.com.ar/gato" class="btn btn-coral btn-sm btn-coral--mobile">Ver todo el catálogo</a>
-  </div>
-</section>
-
-<!-- =================== FAQ =================== -->
-<section id="faq" class="faq">
-  <div class="container">
-    <div class="section-head center reveal">
-      <h2 class="section-title">Preguntas frecuentes <br class="mobile-only"><span class="text-blue-dark">sobre gatos</span></h2>
-    </div>
-    <div class="accordion">
-      <details class="acc-item">
-        <summary>¿Qué le compro a mi gato para darle la bienvenida a casa?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
-        <p>Alimento kitten, litera con piedras, comedero y bebedero, cama, rascador y transportadora: el kit esencial del primer día.</p>
-      </details>
-      <details class="acc-item">
-        <summary>¿Por qué mi gato rasca los muebles?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
-        <p>Rascar es una necesidad natural: libera estrés, marca territorio y desgasta las uñas. Un rascador vertical bien ubicado redirige la conducta.</p>
-      </details>
-      <details class="acc-item">
-        <summary>¿Alimento seco o húmedo: cuál es mejor?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
-        <p>No compiten entre sí: el húmedo aporta hidratación y palatabilidad, el seco cuida la salud dental. Combinarlos (mix feeding) suma lo mejor de los dos.</p>
-      </details>
-      <details class="acc-item">
-        <summary>¿Qué piedras sanitarias elegir según tu litera?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
-        <p>La bentonita aglutina y controla olores de forma muy eficaz. Las fibras vegetales son biodegradables y generan menos polvo. Depende de tu prioridad.</p>
-      </details>
-      <details class="acc-item">
-        <summary>¿Cómo recibo los descuentos vigentes en productos para gatos?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
-        <p>Sumándote a Puppis Club: acceso a promos exclusivas, envío preferencial y 15% OFF en tu primera compra.</p>
-      </details>
-    </div>
-  </div>
-</section>
 
 </main>
 
@@ -816,7 +755,7 @@
     });
   });
 
-  /* ---- Puntos de carruseles mobile (chips, por qué Puppis, más vendidos) ---- */
+  /* ---- Puntos de carruseles mobile (chips y por qué Puppis) ---- */
   document.querySelectorAll('.dots[data-for]').forEach(function(box){
     var track = document.querySelector(box.getAttribute('data-for'));
     if (!track) return;
@@ -838,13 +777,6 @@
     track.addEventListener('scroll', marcar, { passive: true });
     window.addEventListener('resize', marcar);
     marcar();
-  });
-
-  /* ---- FAQ: un panel abierto a la vez ---- */
-  document.querySelectorAll('.acc-item').forEach(function(item){
-    item.addEventListener('toggle', function(){
-      if (item.open) document.querySelectorAll('.acc-item').forEach(function(o){ if (o !== item) o.open = false; });
-    });
   });
 
   /* ---- Reveal al scroll ---- */
@@ -870,7 +802,6 @@
     }
     window.addEventListener('load', avisar);
     window.addEventListener('resize', avisar);
-    document.addEventListener('toggle', avisar, true);
     document.addEventListener('click', function(){ setTimeout(avisar, 50); }, true);
     if (window.ResizeObserver) new ResizeObserver(avisar).observe(document.body);
   }
