@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<!--
+==========================================================================
+ LANDING GATOS · PUPPIS  —  versión IFRAME (VTEX) · VARIANTE MOBILE v2 (body.mv2)
+ Diseño: Figma "Untitled" (node 1:2) · desktop 1440 + mobile 390
+==========================================================================
+
+ CÓMO VIVE
+   Se publica en GitHub Pages (mismo esquema que /puppis-club y
+   /formas-de-entrega) y se embebe en puppis.com.ar/gato con un iframe.
+   Las imágenes van en la carpeta img/ al lado de este archivo.
+
+ LO QUE YA RESUELVE PARA EL IFRAME
+   · Sin header, breadcrumb ni footer: los pone VTEX.
+   · robots "noindex, indexifembedded": Google no indexa la URL de GitHub
+     suelta, pero sí el contenido cuando está embebido en puppis.com.ar.
+   · Todo link externo se abre en la ventana padre (target="_top"),
+     salvo WhatsApp que abre pestaña nueva.
+   · Altura automática: avisa la altura al padre por postMessage.
+   · Scroll a secciones (chips): pide al padre que scrollee.
+
+ SNIPPET PARA EL PADRE (VTEX) — reemplazar "iframe-gatos" por el id real
+   <script>
+   window.addEventListener('message', function (e) {
+     var f = document.getElementById('iframe-gatos');
+     if (!f || !e.data) return;
+     if (e.data.type === 'puppis-gatos:height') f.style.height = e.data.height + 'px';
+     if (e.data.type === 'puppis-gatos:scroll') {
+       var y = f.getBoundingClientRect().top + window.pageYOffset + e.data.top - 90; // 90 = alto header sticky
+       window.scrollTo({ top: y, behavior: 'smooth' });
+     }
+   });
+   </script>
+
+ ANTES DE PUBLICAR
+   1. Buscar "TODO:" en este archivo (links reales, copy a confirmar).
+   2. SEO: en la página nativa de VTEX (/gato) poner H1, title, meta y el
+      JSON-LD de FAQ. Dentro del iframe NO suman para puppis.com.ar.
+==========================================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, indexifembedded">
+<title>¿Qué necesita tu gato? Alimento, Salud y Accesorios | Puppis</title>
+<meta name="description" content="Contanos qué le pasa a tu gato -urinario, esterilizado, ansioso, bolas de pelo, senior- y te mostramos exactamente qué comprar, recomendado por veterinarios.">
+<link rel="canonical" href="https://www.puppis.com.ar/gato">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --yellow:#ffd100;
+    --yellow-soft:#f7d672;
+    --yellow-card:#fad972;
+    --blue:#3f7cba;
+    --blue-dark:#194f90;
+    --blue-light:#a9c4e4;
+    --coral:#f47c73;
+    --coral-btn:rgba(247,127,127,.95);
+    --green-wa:#1fc05b;
+    --ink:#1f3554;
+    --text:#44546a;
+    --text-card:#5c5230;
+    --bg-soft:#eef2fb;
+    --bg-capture:#e4e8f2;
+    --bg-light:#f6f8fd;
+    --line:#e7ecf5;
+    --white:#ffffff;
+    --radius:18px;
+    --radius-sm:12px;
+    --radius-lg:24px;
+    --shadow:0 12px 30px rgba(25,79,144,.08);
+    --shadow-soft:0 6px 18px rgba(25,79,144,.06);
+    --maxw:1120px;
+  }
+
+  /* ---------- BASE ---------- */
+  *,*::before,*::after{ box-sizing:border-box; }
+  html,body{ margin:0; overflow-x:hidden; }
+  main{ overflow-x:clip; }
+  .hero-cat,.need-cat,.why-cat,.mix-bowl{ height:auto; max-width:none; }
+  body{
+    font-family:Nunito,system-ui,-apple-system,sans-serif;
+    color:var(--text); background:var(--white);
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  button{ font-family:inherit; cursor:pointer; }
+  p{ margin:0; }
+
+  .container{ width:100%; max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; }
+  .center{ text-align:center; }
+  .mobile-only{ display:none; }
+
+  h1,h2,h3,h4{ font-family:Nunito,sans-serif; font-weight:900; line-height:1.1; margin:0; color:var(--blue); letter-spacing:-.5px; }
+  .text-blue-dark{ color:var(--blue-dark); }
+  .text-yellow{ color:var(--yellow-soft); }
+
+  .section-title{ font-weight:900; font-size:clamp(1.8rem,4vw,2.6rem); line-height:1.1; color:var(--blue); letter-spacing:-.5px; }
+  .section-sub{ margin-top:16px; font-size:clamp(1rem,1.6vw,1.15rem); color:var(--blue); max-width:640px; }
+  .section-sub.center{ margin-left:auto; margin-right:auto; }
+  .section-head{ max-width:720px; margin:0 0 44px; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---------- BOTONES ---------- */
+  .btn{
+    display:inline-block; font-weight:900; letter-spacing:.5px; text-align:center;
+    border-radius:999px; border:2px solid transparent; cursor:pointer;
+    transition:transform .15s, box-shadow .15s, background .15s, color .15s;
+  }
+  .btn-primary{ background:var(--yellow-soft); color:var(--blue-dark); padding:16px 36px; font-size:1.05rem; box-shadow:0 3px 5px rgba(63,124,186,.38); }
+  .btn-primary:hover{ transform:translateY(-1px); box-shadow:0 5px 5px rgba(244,124,115,.25); }
+  .btn-outline{ background:var(--white); color:var(--blue); border-color:var(--blue); padding:17px 26px; font-size:.95rem; }
+  .btn-outline:hover{ background:var(--blue); color:var(--white); }
+  .btn-coral{ background:var(--coral-btn); color:var(--white); padding:13px 28px; font-size:.95rem; }
+  .btn-coral:hover{ background:var(--coral); }
+  .btn-sm{ padding:13px 24px; font-size:.92rem; }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .6s, transform .6s; }
+  .reveal.is-visible{ opacity:1; transform:none; }
+  .no-js .reveal{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+  section{ padding:70px 0 80px; position:relative; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    color:var(--white); overflow:hidden;
+    background:var(--blue-dark) url("img/hero-bg.webp") center top/cover no-repeat;
+    min-height:390px; padding:84px 0 130px;
+  }
+  .hero::after{
+    content:""; position:absolute; z-index:2; left:0; bottom:-1px; width:100%; height:70px;
+    background:var(--white); border-radius:24px 24px 0 0; /* rectángulo blanco con esquinas redondeadas, borde superior recto */
+  }
+  .hero__eyebrow{ display:block; font-weight:800; font-size:1.25rem; line-height:1.02; margin-bottom:18px; }
+  .hero__title{ font-weight:900; font-size:clamp(2.1rem,5vw,3.4rem); line-height:1.08; letter-spacing:-1px; color:var(--white); }
+
+  /* Gato bengala: cuelga del hero sobre el selector */
+  .hero-cat{
+    position:absolute; z-index:3; pointer-events:none;
+    width:640px; left:calc(50% + 50px); top:-329px; transform:scaleX(-1);
+  }
+
+  /* ---------- SELECTOR (chips) ---------- */
+  .needs-select{ padding:40px 0 8px; }
+  .needs-select .section-sub{ max-width:504px; }
+  .chips{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin:48px 0 0; position:relative; z-index:2; }
+  .chip{
+    background:var(--bg-soft); border:2px solid transparent; border-radius:var(--radius);
+    padding:26px 14px 24px; text-align:center; box-shadow:var(--shadow-soft);
+    transition:border-color .18s, transform .18s, background .18s;
+  }
+  .chip .tile{
+    width:54px; height:54px; margin:0 auto; background:var(--white); border-radius:14px;
+    box-shadow:var(--shadow-soft); display:grid; place-items:center;
+  }
+  .chip .tile img{ max-width:none; }
+  .chip .t{ display:block; font-weight:900; color:var(--blue-dark); font-size:1.05rem; margin-top:18px; line-height:1.2; }
+  .chip .s{ display:block; font-size:.88rem; color:var(--text); margin-top:6px; }
+  .chip:hover{ border-color:var(--blue); transform:translateY(-3px); }
+  .chip.is-active{ background:var(--yellow-soft); border-color:var(--yellow-soft); }
+  .chip.is-active .s{ color:var(--ink); }
+  .dots{ display:none; }
+
+  /* ---------- MÓDULOS DE NECESIDAD ---------- */
+  .need-modules{ padding:48px 0 70px; }
+  .need-panel{
+    position:relative; background:var(--bg-soft); border-radius:var(--radius-lg);
+    padding:44px 44px 40px; box-shadow:var(--shadow-soft);
+  }
+  .need-cat{ position:absolute; width:588px; left:calc(100% - 413px); top:-63px; pointer-events:none; z-index:1; }
+  .need-txt{ max-width:640px; position:relative; z-index:2; }
+  .need-txt h2{ font-size:clamp(1.5rem,3vw,2.1rem); }
+  .need-txt > p{ font-size:1.05rem; line-height:1.55; margin-top:14px; }
+  .vet-badge{
+    display:inline-block; background:var(--white); border-radius:999px; padding:9px 26px;
+    font-size:.85rem; color:var(--blue-dark); font-weight:800; margin:20px 0 16px; box-shadow:var(--shadow-soft);
+  }
+  .check-list{ display:flex; flex-direction:column; gap:12px; }
+  .check-list li{ font-size:1rem; padding-left:32px; position:relative; line-height:1.5; }
+  .check-list li::before,
+  .mix-benef .ok{
+    content:""; position:absolute; left:0; top:2px; width:20px; height:20px; border-radius:50%;
+    background:var(--blue) url("img/ico-check.svg") center/13px no-repeat;
+  }
+  .check-list b{ color:var(--blue-dark); font-weight:900; }
+  .micro-faq{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:36px; position:relative; z-index:2; }
+  .micro-faq div{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 24px; font-size:.92rem; line-height:1.55; box-shadow:var(--shadow-soft); min-height:149px;
+  }
+  .micro-faq b{ color:var(--blue-dark); display:block; margin-bottom:8px; font-size:1rem; font-weight:900; line-height:1.55; }
+  .need-ctas{ margin-top:30px; }
+
+  /* ---------- MIX FEEDING ---------- */
+  .mix{ padding:60px 0 80px; }
+  .mix-head{ text-align:center; }
+  .guia{
+    display:inline-block; color:var(--blue); font-weight:800; font-size:1.375rem; line-height:1.2;
+    padding-bottom:10px; border-bottom:1px solid var(--blue); margin-bottom:22px;
+  }
+  .mix-band{
+    position:relative; display:flex; min-height:392px; margin:48px auto 0; max-width:var(--maxw);
+    border-radius:var(--radius-lg); box-shadow:var(--shadow);
+  }
+  .mix-lado{ flex:1; padding:40px 44px; display:flex; flex-direction:column; justify-content:center; }
+  .mix-hum{ background:var(--blue-dark); border-radius:var(--radius-lg) 0 0 var(--radius-lg); }
+  .mix-sec{ background:var(--yellow-soft); border-radius:0 var(--radius-lg) var(--radius-lg) 0; }
+  .mix-cab{
+    align-self:flex-start; font-size:.78rem; font-weight:900; letter-spacing:.1em; text-transform:uppercase;
+    background:rgba(255,255,255,.22); color:var(--white); padding:7px 18px; border-radius:999px; margin-bottom:20px;
+  }
+  .mix-sec .mix-cab{ background:var(--white); color:var(--blue-dark); }
+  .mix-benef{
+    position:relative; background:var(--white); border-radius:var(--radius-sm); padding:14px 18px 14px 50px;
+    font-size:.92rem; margin:8px 0; width:100%; max-width:382px; line-height:1.45; min-height:70px;
+  }
+  .mix-benef .ok{ left:18px; top:15px; }
+  .mix-benef b{ color:var(--blue-dark); font-weight:900; }
+  .mix-centro{ flex:0 0 180px; background:linear-gradient(90deg,var(--blue-dark) 50%,var(--yellow-soft) 50%); }
+  .mix-bowl{ position:absolute; width:447px; left:50%; top:50%; transform:translate(-50%,-50%); pointer-events:none; }
+  .mix-foot{ display:flex; gap:16px; justify-content:center; padding-top:40px; flex-wrap:wrap; }
+  .mix-foot .btn-primary{ padding:17px 36px; }
+
+  /* ---------- BANDA WHATSAPP ---------- */
+  .wa-band{ padding:0; }
+  .wa-band__inner{
+    background:var(--blue-dark) url("img/banda-whatsapp-bg.webp") center/cover no-repeat;
+    min-height:202px; display:flex; align-items:center; justify-content:center; gap:110px; padding:30px 24px;
+  }
+  .wa-band h2{ color:var(--yellow-card); font-size:2.6rem; line-height:1.1; }
+  .wa-band__cta{ text-align:center; }
+  .wa-band__cta p{ color:var(--white); font-weight:900; font-size:1.25rem; margin-bottom:14px; }
+  .btn-wa{ background:var(--green-wa); color:var(--white); font-size:1.25rem; padding:19px 46px; box-shadow:0 3px 5px rgba(63,124,186,.38); }
+  .btn-wa:hover{ background:#19a94f; transform:translateY(-1px); }
+
+  /* ---------- POR QUÉ PUPPIS + CAPTURA ---------- */
+  .why{ padding:46px 0 70px; }
+  .why .container{ max-width:1180px; }
+  .why-title{ text-align:center; color:var(--blue-dark); font-size:2.125rem; line-height:1.15; }
+  .why-cat{ position:absolute; width:553px; left:-537px; top:-52px; pointer-events:none; transform:scaleX(-1); }
+  .why-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:32px; }
+  .why-card{
+    background:var(--yellow-card); border-radius:16px; min-height:166px; padding:24px 12px 20px;
+    text-align:center; display:flex; flex-direction:column; align-items:center;
+  }
+  .why-ic{ width:57px; height:57px; position:relative; margin-bottom:8px; }
+  .why-ic--circle{ background:var(--blue-light); border-radius:50%; }
+  .why-ic--programado span{ position:absolute; left:10px; top:11px; width:36px; height:33px; overflow:hidden; }
+  .why-ic--programado img{ position:absolute; left:-30.8px; top:-30.8px; width:138.8px; height:135.8px; max-width:none; }
+  .why-ic--club img{ width:66px; height:59px; max-width:none; margin-left:-4.5px; margin-top:-1px; }
+  .why-card b{ display:block; font-weight:900; font-size:.906rem; color:var(--blue-dark); line-height:1.38; }
+  .why-card p{ font-size:.75rem; color:var(--text-card); margin-top:4px; line-height:1.33; }
+
+  .capture-bar{
+    margin-top:28px; background:var(--bg-capture); border-radius:16px;
+    display:flex; align-items:center; gap:28px; padding:22px 28px; flex-wrap:wrap; min-height:106px;
+  }
+  .capture-bar p{ font-size:.906rem; color:#20232f; line-height:1.38; flex:1 1 320px; }
+  .capture-bar b{ display:block; font-weight:900; font-size:1.4375rem; color:var(--blue-dark); line-height:1.38; }
+  .capture-form{ display:flex; gap:22px; margin-left:auto; align-items:center; flex-wrap:wrap; }
+  .capture-form input{
+    width:254px; height:46px; padding:0 16px; border-radius:999px; border:1px solid var(--blue-light);
+    font-size:.875rem; font-family:inherit; outline:none; color:var(--blue-dark); background:var(--white);
+  }
+  .capture-form input:focus{ border-color:var(--blue); }
+  .capture-form .btn{ width:171px; height:46px; padding:0; font-size:.9375rem; letter-spacing:0; }
+
+  /* ---------- MÁS VENDIDOS ---------- */
+  .bestsellers{ background:var(--bg-soft); padding:60px 0 64px; }
+  .section-head-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:36px; }
+  .shelf{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .s-card{
+    position:relative; background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px; box-shadow:var(--shadow-soft); display:flex; flex-direction:column;
+    transition:box-shadow .18s, transform .18s;
+  }
+  .s-card:hover{ box-shadow:var(--shadow); transform:translateY(-3px); }
+  .s-ph{ height:104px; background:var(--bg-soft); border-radius:14px; display:grid; place-items:center; font-size:2rem; }
+  .s-badge{ position:absolute; top:24px; left:24px; background:var(--coral); color:var(--white); font-size:.68rem; font-weight:900; padding:4px 11px; border-radius:999px; }
+  .s-brand{ font-size:.65rem; color:var(--blue); text-transform:uppercase; letter-spacing:.08em; font-weight:900; margin:14px 0 0; }
+  .s-name{ font-size:.88rem; font-weight:700; line-height:1.35; margin:5px 0 10px; }
+  .s-price{ font-size:1.25rem; font-weight:900; color:var(--blue-dark); margin:auto 0 0; }
+  .s-cta{ display:block; text-align:center; background:var(--blue-dark); color:var(--white); font-size:.82rem; font-weight:900; letter-spacing:.5px; border-radius:999px; padding:11px; margin-top:12px; }
+  .s-cta:hover{ background:#123f76; }
+  .bestsellers .btn-coral--mobile{ display:none; }
+
+  /* ---------- FAQ ---------- */
+  .faq{ padding:70px 0 80px; }
+  .accordion{ max-width:900px; margin:0 auto; }
+  .acc-item{ background:var(--bg-soft); border:1px solid transparent; border-radius:var(--radius); padding:0 8px; margin-bottom:14px; box-shadow:var(--shadow-soft); transition:border-color .18s; }
+  .acc-item[open]{ border-color:var(--blue); background:var(--white); }
+  .acc-item summary{ list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 18px; font-weight:800; font-size:1.02rem; color:var(--blue-dark); }
+  .acc-item summary::-webkit-details-marker{ display:none; }
+  .acc-item .chev{ flex-shrink:0; width:22px; height:22px; transition:transform .2s; }
+  .acc-item[open] .chev{ transform:rotate(180deg); }
+  .acc-item p{ margin:0 0 22px; padding:0 18px; font-size:.95rem; line-height:1.6; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1240px){
+    .why-cat{ display:none; }
+    .need-cat{ width:440px; left:calc(100% - 300px); top:-40px; }
+  }
+  @media (max-width:1100px){
+    .hero-cat{ width:588px; left:auto; right:-72px; top:-310px; }
+    .need-cat{ display:none; }
+    .wa-band__inner{ gap:50px; }
+  }
+  @media (max-width:960px){
+    .hero-cat{ width:420px; right:-50px; top:-241px; }
+    .chips{ grid-template-columns:repeat(2,1fr); }
+    .shelf{ grid-template-columns:repeat(2,1fr); }
+    .why-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:800px){
+    .hero-cat{ width:360px; right:-40px; top:-217px; }
+    .mix-band{ flex-direction:column; }
+    .mix-hum{ border-radius:var(--radius-lg) var(--radius-lg) 0 0; padding-bottom:110px; }
+    .mix-sec{ border-radius:0 0 var(--radius-lg) var(--radius-lg); padding-top:110px; }
+    .mix-centro{ display:none; }
+    .mix-bowl{ width:220px; }
+    .mix-lado{ align-items:stretch; }
+    .mix-benef{ max-width:none; }
+  }
+  @media (max-width:600px){
+    .container{ padding:0 18px; }
+    .mobile-only{ display:inline; }
+    section{ padding:44px 0 52px; }
+
+    /* hero: sin curva, gato a la derecha */
+    .hero{ min-height:240px; padding:52px 0 70px; background-size:auto 113%; background-position:22% top; }
+    .hero::after{ display:none; }
+    .hero__eyebrow{ font-size:.9rem; margin-bottom:10px; }
+    .hero__title{ font-size:2rem; }
+    .hero-cat{ width:325px; left:128px; right:auto; top:-148px; }
+
+    .needs-select{ padding:36px 0 0; }
+    .needs-select .section-head{ text-align:left; margin-bottom:0; }
+    .needs-select .section-title{ max-width:200px; }
+    .needs-select .section-sub{ text-align:center; margin-top:76px; font-size:.95rem; position:relative; z-index:4; }
+
+    /* chips en carrusel horizontal con barra */
+    .chips{
+      display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+      margin:30px -18px 0; padding:8px 18px 14px; scroll-padding:0 18px; scrollbar-width:none;
+    }
+    .chips::-webkit-scrollbar{ display:none; }
+    .chip{ flex:0 0 138px; min-height:160px; padding:20px 8px 14px; scroll-snap-align:start; }
+    .chip .t{ font-size:.8rem; margin-top:12px; }
+    .chip .s{ font-size:.66rem; margin-top:4px; }
+
+    .need-modules{ padding:30px 0 40px; }
+    .need-panel{ padding:28px 18px 26px; }
+    .need-txt > p{ font-size:.98rem; }
+    .vet-badge{ padding:9px 20px; }
+    .micro-faq{ grid-template-columns:1fr; }
+    .micro-faq div{ min-height:0; }
+    .need-ctas{ text-align:center; }
+
+    .mix-head .section-title{ font-size:1.8rem; }
+    .mix-head .section-sub{ font-size:.88rem; }
+    .mix-band{ margin:30px 0 0; }
+    .mix-lado{ padding:34px 18px; }
+    .mix-hum{ padding-bottom:140px; }
+    .mix-sec{ padding-top:140px; }
+    .mix-desc{ display:none; }
+    .mix-benef{ min-height:0; padding:11px 14px 11px 46px; font-size:.82rem; }
+    .mix-benef .ok{ left:14px; top:9px; }
+    .mix-bowl{ width:430px; transform:translate(-50%,-50%) rotate(90deg); }
+    .mix-foot{ padding-top:28px; }
+    .mix-foot .btn-primary{ flex-basis:auto; }
+
+    .wa-band{ padding:0 12px; }
+    .wa-band__inner{ flex-direction:column; gap:14px; border-radius:21px; background-size:340% 123%; background-position:11% 85%; padding:40px 22px 44px; text-align:center; }
+    .wa-band h2{ font-size:1.8rem; }
+    .wa-band__cta p{ font-size:1.1rem; }
+    .btn-wa{ font-size:1.05rem; padding:16px 30px; }
+
+    .why{ padding:40px 0 50px; }
+    .why-title{ font-size:1.6rem; color:var(--blue); }
+    .why-grid{
+      display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:14px;
+      margin:24px -18px 0; padding:4px 18px 10px; scroll-padding:0 18px; scrollbar-width:none;
+    }
+    .why-grid::-webkit-scrollbar{ display:none; }
+    .why-card{ flex:0 0 76%; min-height:150px; scroll-snap-align:center; }
+    /* puntos de los carruseles: el activo lleva borde azul oscuro */
+    .dots{ display:flex; gap:8px; justify-content:center; margin-top:12px; }
+    .dots button{ width:12px; height:12px; padding:0; border-radius:50%; background:var(--blue-light); border:1px solid var(--blue-light); }
+    .dots button.is-on{ border-color:var(--blue-dark); }
+    .capture-bar{ flex-direction:column; align-items:stretch; padding:24px 18px; gap:18px; }
+    .capture-bar p{ flex:none; color:var(--blue-dark); }
+    .capture-bar b{ font-size:1.2rem; line-height:1.25; margin-bottom:6px; }
+    .capture-form{ margin-left:0; flex-direction:column; gap:12px; }
+    .capture-form input, .capture-form .btn{ width:100%; }
+
+    .bestsellers{ padding:44px 0 30px; }
+    .section-head-row .btn-coral{ display:none; }
+    .bestsellers .btn-coral--mobile{ display:inline-block; margin-top:20px; }
+    .shelf{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:14px; margin:0 -18px; padding:2px 18px 10px; scroll-padding:0 18px; scrollbar-width:none; }
+    .shelf::-webkit-scrollbar{ display:none; }
+    .s-card{ flex:0 0 88%; scroll-snap-align:center; }
+
+    .faq .section-title{ font-size:1.6rem; }
+    .acc-item summary{ font-size:.92rem; padding:18px 14px; }
+  }
+  /* ===== VARIANTE MOBILE v2 (se activa con <body class="mv2">) =====
+     Chips en grilla de 2 columnas sin bajada + "¿Por qué elegir Puppis?" 2x2.
+     landing-gatos-mobile-v2.html es este mismo archivo con body.mv2. */
+  @media (max-width:600px){    body.mv2 .chips{ display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow:visible; margin:28px 0 0; padding:0; }
+    body.mv2 .chip{
+      flex:none; min-height:60px; padding:10px 10px; display:grid; grid-template-columns:40px 1fr;
+      column-gap:10px; align-items:center; text-align:left; border-radius:14px;
+    }
+    body.mv2 .chip:hover{ transform:none; }
+    body.mv2 .chip .tile{ grid-row:span 2; width:40px; height:40px; border-radius:10px; }
+    body.mv2 .chip .tile img{ transform:scale(.72); }
+    body.mv2 .chip .tile{ grid-row:auto; }
+    body.mv2 .chip .t{ margin:0; font-size:.84rem; line-height:1.15; }
+    body.mv2 .chip .s{ display:none; } /* la bajada se ve en el módulo; acá suma alto sin ayudar a elegir */
+    body.mv2 .dots[data-for=".chips"], body.mv2 .dots[data-for=".why-grid"]{ display:none; }
+    body.mv2 .why-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow:visible; margin:22px 0 0; padding:0; }
+    body.mv2 .why-card{ flex:none; min-height:0; padding:16px 8px 14px; }
+    body.mv2 .why-ic{ transform:scale(.85); margin-bottom:4px; }
+    body.mv2 .why-card b{ font-size:.82rem; }
+    body.mv2 .why-card p{ font-size:.68rem; }
+  }
+</style>
+</head>
+<body class="no-js mv2">
+<main>
+
+<!-- =================== HERO =================== -->
+<section id="inicio" class="hero">
+  <div class="container">
+    <span class="hero__eyebrow">Sabemos qui&eacute;n manda en tu casa</span>
+    <!-- TODO: el H1 real de SEO va en la página nativa de VTEX; acá queda como título visual -->
+    <h1 class="hero__title">Todo para tu michi,<br><span class="text-yellow">en un solo lugar</span></h1>
+  </div>
+</section>
+
+<!-- =================== SELECTOR DE NECESIDADES =================== -->
+<section id="necesidades" class="needs-select">
+  <div class="container">
+    <img class="hero-cat" src="img/gato-bengala.webp" width="799" height="659" alt="" aria-hidden="true">
+
+    <div class="section-head center reveal">
+      <h2 class="section-title">¿Qué necesita<br><span class="text-blue-dark">tu gato?</span></h2>
+      <p class="section-sub center">Elegí la situación que más se parece a la tuya y saltá directo a la recomendación de nuestro equipo.</p>
+    </div>
+
+    <div class="chips" role="tablist" aria-label="Necesidades de tu gato">
+      <button class="chip is-active" role="tab" aria-selected="true" aria-controls="panel-urinario" data-tab="urinario">
+        <span class="tile"><img src="img/ico-hidratacion.svg" width="40" height="37" alt=""></span><span class="t">Problemas urinarios</span><span class="s">pH, hidratación y litera</span>
+      </button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="panel-esterilizado" data-tab="esterilizado">
+        <span class="tile"><img src="img/ico-esterilizado.svg" width="32" height="41" alt=""></span><span class="t">Esterilizado</span><span class="s">dieta post-castración</span>
+      </button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="panel-peso" data-tab="peso">
+        <span class="tile"><img src="img/ico-peso.svg" width="30" height="38" alt=""></span><span class="t">Control de peso</span><span class="s">volver al peso ideal</span>
+      </button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="panel-ansioso" data-tab="ansioso">
+        <span class="tile"><img src="img/ico-ansioso.svg" width="43" height="41" alt=""></span><span class="t">Ansioso o estresado</span><span class="s">calma y enriquecimiento</span>
+      </button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="panel-pelo" data-tab="pelo">
+        <span class="tile"><img src="img/ico-pelo.svg" width="33" height="33" alt=""></span><span class="t">Bolas de pelo</span><span class="s">piel y pelaje</span>
+      </button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="panel-gatito" data-tab="gatito">
+        <span class="tile"><img src="img/ico-gatito.svg" width="53" height="52" alt=""></span><span class="t">Gatito nuevo</span><span class="s">kit de bienvenida</span>
+      </button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="panel-senior" data-tab="senior">
+        <span class="tile"><img src="img/ico-senior.svg" width="50" height="54" alt=""></span><span class="t">Senior 7+</span><span class="s">cuidados de edad</span>
+      </button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="panel-indoor" data-tab="indoor">
+        <span class="tile"><img src="img/ico-multigato.svg" width="48" height="52" alt=""></span><span class="t">Indoor / multigato</span><span class="s">deptos y convivencia</span>
+      </button>
+    </div>
+    <div class="dots" data-for=".chips" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- =================== MÓDULOS DE NECESIDAD =================== -->
+<section class="need-modules" id="modulos">
+  <div class="container">
+
+    <article class="need-panel" id="panel-urinario" role="tabpanel">
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Tu gato tiene<br><span class="text-blue-dark">problemas urinarios?</span></h2>
+        <p>Es una de las consultas veterinarias más frecuentes, sobre todo en machos castrados y gatos 100% indoor. La clave está en dos frentes: un alimento específico que cuide el pH de la orina y más hidratación en el día a día.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Alimento urinary</b> (seco o húmedo), siempre con indicación veterinaria.</li>
+          <li><b>Más agua:</b> una fuente bebedero aumenta el consumo diario.</li>
+          <li><b>Litera siempre limpia</b>, con piedras aglutinantes de grano fino.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Qué alimento le doy a un gato con problemas urinarios?</b>Uno formulado urinary, siempre con indicación veterinaria: controla los minerales y el pH de la orina.</div>
+        <div><b>¿Cómo hago para que tome más agua?</b>Fuentes en movimiento, varios bebederos lejos de la comida y sumar alimento húmedo a la dieta.</div>
+      </div>
+      <!-- TODO: link real a la colección -->
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Urinario (23)</a></div>
+    </article>
+
+    <article class="need-panel" id="panel-esterilizado" role="tabpanel" hidden>
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Acab&aacute;s de esterilizar<br><span class="text-blue-dark">a tu gato?</span></h2>
+        <p>Después de la cirugía el metabolismo se vuelve más lento y baja el gasto de energía, por lo que aumenta el riesgo de sobrepeso y de problemas urinarios. El cambio de alimento es la variable que más impacto tiene a largo plazo.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Alimento "Sterilised"</b>, con menos calorías y cuidado urinario.</li>
+          <li><b>Porciones medidas</b>, no alimento a libre demanda.</li>
+          <li><b>Rutina de juego diaria</b> para compensar el menor gasto energético.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Engorda un gato por estar castrado?</b>No es automático: cambia el metabolismo, que gasta menos energía. Por eso conviene pasar a un alimento sterilised.</div>
+        <div><b>¿Cuándo empiezo con el alimento sterilised?</b>Desde la cirugía, según indicación de tu veterinario, y de por vida.</div>
+      </div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Esterilizados</a></div>
+    </article>
+
+    <article class="need-panel" id="panel-peso" role="tabpanel" hidden>
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Tu gato<br><span class="text-blue-dark">subi&oacute; de peso?</span></h2>
+        <p>El sobrepeso felino aumenta el riesgo de diabetes, problemas articulares y urinarios. La clave no es "darle menos": es un alimento light que mantenga la saciedad, porciones medidas y más estímulo para que se mueva.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Alimento Weight Control</b>, con más fibra y saciedad, menos calorías.</li>
+          <li><b>Porciones medidas</b> con vaso dosificador o balanza de cocina.</li>
+          <li><b>Juego activo</b> antes de comer, para que gaste energía primero.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Cómo sé si mi gato tiene sobrepeso?</b>Deberías palpar sus costillas sin presionar fuerte y ver una cintura marcada al mirarlo desde arriba.</div>
+        <div><b>¿Cuánto debería bajar por semana?</b>La bajada tiene que ser progresiva, nunca por ayuno. Consultá el plan con tu veterinario.</div>
+      </div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Control de Peso</a></div>
+    </article>
+
+    <article class="need-panel" id="panel-ansioso" role="tabpanel" hidden>
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Tu gato est&aacute;<br><span class="text-blue-dark">ansioso o estresado?</span></h2>
+        <p>Mudanzas, un animal nuevo en casa, ruidos fuertes o poco enriquecimiento pueden disparar ansiedad. Las señales más comunes: maullidos excesivos, esconderse, lamerse en exceso o marcar orina fuera de la litera.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Difusor de feromonas</b> en la zona donde más tiempo descansa.</li>
+          <li><b>Enriquecimiento vertical:</b> rascadores y escondites en altura.</li>
+          <li><b>Rutina fija</b> de horarios de comida y de juego.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Por qué mi gato se esconde todo el día?</b>Suele ser miedo o estrés. Conviene buscar la causa: algún cambio reciente en la casa o la rutina.</div>
+        <div><b>¿Sirven las feromonas sintéticas?</b>Sí, imitan señales naturales de calma felina. El efecto se nota con uso continuo, al menos 4 semanas.</div>
+      </div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Bienestar y Calma</a></div>
+    </article>
+
+    <article class="need-panel" id="panel-pelo" role="tabpanel" hidden>
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Bolas de pelo<br><span class="text-blue-dark">por toda la casa?</span></h2>
+        <p>Al acicalarse, tu gato traga el pelo suelto, y en la muda estacional el problema se agrava. La combinación de cepillado regular con un alimento o suplemento específico reduce mucho los vómitos de bolas de pelo.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Cepillado 2 a 3 veces por semana</b>, diario en épocas de muda.</li>
+          <li><b>Alimento o pasta hairball</b>, con fibra que ayuda a eliminar el pelo.</li>
+          <li><b>Ácidos grasos omega</b> para un pelaje que se desprenda menos.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Cuántas veces por semana hay que cepillarlo?</b>2 a 3 veces en general, todos los días en las épocas de muda estacional.</div>
+        <div><b>¿La malta es necesaria siempre?</b>Ayuda a eliminar el pelo tragado. Es especialmente útil en gatos de pelo largo o semilargo.</div>
+      </div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Cuidado del Pelaje</a></div>
+    </article>
+
+    <article class="need-panel" id="panel-gatito" role="tabpanel" hidden>
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Llega un gatito<br><span class="text-blue-dark">nuevo a casa?</span></h2>
+        <p>Las primeras semanas definen hábitos de por vida. Un alimento kitten de mayor densidad calórica, una litera accesible y un espacio propio ayudan a que se adapte sin sobresaltos.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Alimento kitten</b>, con más proteína y calcio para el crecimiento.</li>
+          <li><b>Litera de bordes bajos</b> con piedras suaves para sus patitas.</li>
+          <li><b>Primera consulta veterinaria</b> y calendario de vacunas.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Hasta qué edad se le da alimento kitten?</b>Aproximadamente hasta los 12 meses, según la raza y el tamaño del gato.</div>
+        <div><b>¿Qué necesita el primer día en casa?</b>El kit esencial: comida, agua, litera, un rincón tranquilo y mucha paciencia.</div>
+      </div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Gatitos</a></div>
+    </article>
+
+    <article class="need-panel" id="panel-senior" role="tabpanel" hidden>
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Tu gato<br><span class="text-blue-dark">ya es senior?</span></h2>
+        <p>A partir de los 7 años el metabolismo baja y suelen aparecer molestias articulares. Los alimentos con antioxidantes y una digestión más suave acompañan mejor esta etapa, junto con algunos ajustes en la casa.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Alimento senior</b>, de fácil digestión y cuidado articular.</li>
+          <li><b>Comederos y bebederos elevados</b>, para que le cueste menos esfuerzo.</li>
+          <li><b>Controles veterinarios</b> cada 6 meses a partir de esta edad.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Cómo sé si le duelen las articulaciones?</b>Le cuesta saltar, evita las alturas que antes usaba y se acicala menos.</div>
+        <div><b>¿Cada cuánto llevarlo al veterinario?</b>Cada 6 meses a partir de los 7 años, para detectar a tiempo cualquier molestia.</div>
+      </div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Senior</a></div>
+    </article>
+
+    <article class="need-panel" id="panel-indoor" role="tabpanel" hidden>
+      <img class="need-cat" src="img/gato-gris.webp" width="588" height="470" alt="" aria-hidden="true">
+      <div class="need-txt">
+        <h2>&iquest;Viv&iacute;s en un depto<br><span class="text-blue-dark">con uno o varios gatos?</span></h2>
+        <p>La vida 100% puertas adentro necesita más estímulo y espacio propio por gato. En hogares multigato, la clave es evitar la competencia por recursos: comida, litera y rascadores para todos.</p>
+        <div class="vet-badge">Recomendado por el equipo veterinario de Puppis</div>
+        <ul class="check-list">
+          <li><b>Una litera por gato + una extra</b>, en zonas distintas de la casa.</li>
+          <li><b>Rascadores y perchas</b> repartidos en varios ambientes.</li>
+          <li><b>Alimento Indoor</b>, con control de bolas de pelo y de peso.</li>
+        </ul>
+      </div>
+      <div class="micro-faq">
+        <div><b>¿Cuántas piedras necesito si tengo 2 gatos?</b>La regla es litera = gatos + 1, ubicadas en zonas distintas para evitar tensiones.</div>
+        <div><b>¿Los gatos indoor necesitan alimento diferente?</b>Sí, fórmulas con menos calorías y control de bolas de pelo por su menor actividad física.</div>
+      </div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Indoor y Multigato</a></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =================== MIX FEEDING =================== -->
+<section class="mix">
+  <div class="container mix-head">
+    <span class="guia">Guía rápida</span>
+    <h2 class="section-title">¿Seco o húmedo?<br><span class="text-blue-dark">Mix feeding: lo mejor de ambos mundos</span></h2>
+    <p class="section-sub center">No hace falta elegir uno solo: combinarlos suma los beneficios de los dos formatos.</p>
+  </div>
+  <div class="container">
+    <div class="mix-band reveal">
+      <div class="mix-lado mix-hum">
+        <span class="mix-cab">Alimento húmedo</span>
+        <div class="mix-benef"><span class="ok"></span><b>Mayor hidratación</b><span class="mix-desc"> — aporta el agua esencial para la salud renal y urinaria.</span></div>
+        <div class="mix-benef"><span class="ok"></span><b>Mayor palatabilidad</b><span class="mix-desc"> — la variedad que hace que disfrute más cada comida.</span></div>
+        <div class="mix-benef"><span class="ok"></span><b>Fácil de comer</b><span class="mix-desc"> — ideal para gatitos, senior o gatos con piezas dentales delicadas.</span></div>
+      </div>
+      <div class="mix-centro" aria-hidden="true"></div>
+      <div class="mix-lado mix-sec">
+        <span class="mix-cab">Alimento seco</span>
+        <div class="mix-benef"><span class="ok"></span><b>Salud dental</b><span class="mix-desc"> — la croqueta ayuda a mantener dientes limpios y fuertes.</span></div>
+        <div class="mix-benef"><span class="ok"></span><b>Control de peso</b><span class="mix-desc"> — porciones fáciles de medir para una dieta equilibrada.</span></div>
+        <div class="mix-benef"><span class="ok"></span><b>Más práctico</b><span class="mix-desc"> — no necesita heladera y se mantiene fresco todo el día en el plato.</span></div>
+      </div>
+      <img class="mix-bowl" src="img/bowl-mix.webp" width="447" height="250" alt="Plato con alimento húmedo y seco para gatos">
+    </div>
+  </div>
+  <!-- TODO: links reales -->
+  <div class="container mix-foot">
+    <a href="https://www.puppis.com.ar/gato" class="btn btn-primary">Armá su combo mixto</a>
+    <a href="https://www.puppis.com.ar/gato" class="btn btn-outline">Ver húmedos</a>
+    <a href="https://www.puppis.com.ar/gato" class="btn btn-outline">Ver secos</a>
+  </div>
+</section>
+
+<!-- =================== BANDA WHATSAPP (reemplaza el quiz) =================== -->
+<section class="wa-band" id="whatsapp">
+  <div class="wa-band__inner">
+    <h2>¿No sabés<br>qué necesita?</h2>
+    <div class="wa-band__cta">
+      <p>¿Preferís hablar con alguien?</p>
+      <!-- TODO: confirmar número y mensaje -->
+      <a href="https://wa.me/5491167026320?text=Hola%2C%20quiero%20asesoramiento%20para%20mi%20gato" target="_blank" rel="noopener" class="btn btn-wa">Hablar por WhatsApp <br class="mobile-only">con un experto</a>
+    </div>
+  </div>
+</section>
+
+<!-- =================== POR QUÉ PUPPIS + CAPTURA =================== -->
+<section class="why" id="capture">
+  <div class="container">
+    <img class="why-cat" src="img/gato-siames.webp" width="553" height="464" alt="" aria-hidden="true">
+    <h2 class="why-title reveal">¿Por qué elegir Puppis?</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-ic"><img src="img/ico-domicilio.svg" width="56" height="57" alt=""></div>
+        <b>Envío flash</b><p>Recibilo en el día en CABA y GBA</p>
+      </div>
+      <div class="why-card">
+        <div class="why-ic"><img src="img/ico-whatsapp-card.png" width="57" height="57" alt=""></div>
+        <!-- TODO: el copy del Figma repite el de "Retiro en tienda". Confirmar bajada. -->
+        <b>Ventas por Whatsapp</b><p>Comprá online, retirá en sucursal</p>
+      </div>
+      <div class="why-card">
+        <div class="why-ic why-ic--circle why-ic--programado"><span><img src="img/ico-programado.svg" alt=""></span></div>
+        <b>Envío programado</b><p>Vos tenés el control</p>
+      </div>
+      <div class="why-card">
+        <div class="why-ic why-ic--club"><img src="img/logo-puppis-club.png" width="66" height="59" alt="Puppis Club"></div>
+        <b>Puppis Club</b><p>Beneficios y descuentos exclusivos</p>
+      </div>
+    </div>
+    <div class="dots" data-for=".why-grid" aria-hidden="true"></div>
+
+    <div class="capture-bar reveal">
+      <p><b>15% OFF en tu primera compra</b>sumate al club y recib&iacute; recomendaciones para tu michi</p>
+      <!-- TODO: hoy el form manda a /registro-puppis-club (no guarda el mail). Definir si se integra con el club. -->
+      <form class="capture-form" action="https://www.puppis.com.ar/registro-puppis-club" method="get" target="_top">
+        <input type="email" name="email" required placeholder="tu@email.com" aria-label="Tu email">
+        <button type="submit" class="btn btn-coral">Registrarme</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- =================== MÁS VENDIDOS =================== -->
+<!-- TODO: precios fijos en el código. Reemplazar por shelf nativo de VTEX o actualizar antes de publicar. -->
+<section id="masvendidos" class="bestsellers">
+  <div class="container">
+    <div class="section-head-row">
+      <h2 class="section-title">Los más<br><span class="text-blue-dark">vendidos</span></h2>
+      <a href="https://www.puppis.com.ar/gato" class="btn btn-coral btn-sm">Ver todo el catálogo</a>
+    </div>
+    <div class="shelf">
+      <div class="s-card"><div class="s-ph" aria-hidden="true">🍗</div><p class="s-brand">Excellent</p><p class="s-name">Gato Adulto Pollo y Arroz 7,5 kg</p><p class="s-price">$ 70.100</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
+      <div class="s-card"><span class="s-badge">6x5</span><div class="s-ph" aria-hidden="true">🐟</div><p class="s-brand">Pro Plan</p><p class="s-name">Pouch Gato Adulto Salmón 85 g</p><p class="s-price">$ 3.200</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
+      <div class="s-card"><div class="s-ph" aria-hidden="true">🪨</div><p class="s-brand">Sanicat</p><p class="s-name">Piedras Strong Clumps 7 kg</p><p class="s-price">$ 14.400</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
+      <div class="s-card"><div class="s-ph" aria-hidden="true">🧶</div><p class="s-brand">Pawise</p><p class="s-name">Rascador Torre Esquina XL</p><p class="s-price">$ 53.000</p><a href="https://www.puppis.com.ar/gato" class="s-cta">Agregar</a></div>
+    </div>
+    <div class="dots" data-for=".shelf" aria-hidden="true"></div>
+    <a href="https://www.puppis.com.ar/gato" class="btn btn-coral btn-sm btn-coral--mobile">Ver todo el catálogo</a>
+  </div>
+</section>
+
+<!-- =================== FAQ =================== -->
+<section id="faq" class="faq">
+  <div class="container">
+    <div class="section-head center reveal">
+      <h2 class="section-title">Preguntas frecuentes <br class="mobile-only"><span class="text-blue-dark">sobre gatos</span></h2>
+    </div>
+    <div class="accordion">
+      <details class="acc-item">
+        <summary>¿Qué le compro a mi gato para darle la bienvenida a casa?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
+        <p>Alimento kitten, litera con piedras, comedero y bebedero, cama, rascador y transportadora: el kit esencial del primer día.</p>
+      </details>
+      <details class="acc-item">
+        <summary>¿Por qué mi gato rasca los muebles?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
+        <p>Rascar es una necesidad natural: libera estrés, marca territorio y desgasta las uñas. Un rascador vertical bien ubicado redirige la conducta.</p>
+      </details>
+      <details class="acc-item">
+        <summary>¿Alimento seco o húmedo: cuál es mejor?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
+        <p>No compiten entre sí: el húmedo aporta hidratación y palatabilidad, el seco cuida la salud dental. Combinarlos (mix feeding) suma lo mejor de los dos.</p>
+      </details>
+      <details class="acc-item">
+        <summary>¿Qué piedras sanitarias elegir según tu litera?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
+        <p>La bentonita aglutina y controla olores de forma muy eficaz. Las fibras vegetales son biodegradables y generan menos polvo. Depende de tu prioridad.</p>
+      </details>
+      <details class="acc-item">
+        <summary>¿Cómo recibo los descuentos vigentes en productos para gatos?<svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#3f7cba" stroke-width="2.4" stroke-linecap="round"/></svg></summary>
+        <p>Sumándote a Puppis Club: acceso a promos exclusivas, envío preferencial y 15% OFF en tu primera compra.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  document.body.classList.remove('no-js');
+  var enIframe = window.parent !== window;
+
+  /* ---- Links: salir del iframe ---- */
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var h = a.getAttribute('href');
+    if (h.charAt(0) === '#' || a.hasAttribute('target')) return;
+    a.setAttribute('target', '_top');
+  });
+
+  /* ---- Scroll a un elemento (pide al padre si está embebido) ---- */
+  function irA(el){
+    if (enIframe) {
+      var top = el.getBoundingClientRect().top + window.pageYOffset;
+      window.parent.postMessage({ type: 'puppis-gatos:scroll', top: top }, '*');
+    } else {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  /* ---- Tabs de necesidades ---- */
+  var chips = document.querySelectorAll('.chip');
+  var panels = document.querySelectorAll('.need-panel');
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var target = chip.getAttribute('data-tab');
+      chips.forEach(function(c){ c.classList.remove('is-active'); c.setAttribute('aria-selected','false'); });
+      chip.classList.add('is-active'); chip.setAttribute('aria-selected','true');
+      panels.forEach(function(p){ p.hidden = (p.id !== 'panel-' + target); });
+      irA(document.getElementById('modulos'));
+    });
+  });
+
+  /* ---- Puntos de carruseles mobile (chips, por qué Puppis, más vendidos) ---- */
+  document.querySelectorAll('.dots[data-for]').forEach(function(box){
+    var track = document.querySelector(box.getAttribute('data-for'));
+    if (!track) return;
+    var n = track.children.length, btns = [];
+    for (var i = 0; i < n; i++){
+      var b = document.createElement('button');
+      b.type = 'button'; b.tabIndex = -1;
+      (function(k){ b.addEventListener('click', function(){
+        var max = track.scrollWidth - track.clientWidth;
+        track.scrollTo({ left: n > 1 ? max * k / (n - 1) : 0, behavior: 'smooth' });
+      }); })(i);
+      box.appendChild(b); btns.push(b);
+    }
+    function marcar(){
+      var max = track.scrollWidth - track.clientWidth;
+      var idx = max > 0 ? Math.round(track.scrollLeft / max * (n - 1)) : 0;
+      btns.forEach(function(b, k){ b.classList.toggle('is-on', k === idx); });
+    }
+    track.addEventListener('scroll', marcar, { passive: true });
+    window.addEventListener('resize', marcar);
+    marcar();
+  });
+
+  /* ---- FAQ: un panel abierto a la vez ---- */
+  document.querySelectorAll('.acc-item').forEach(function(item){
+    item.addEventListener('toggle', function(){
+      if (item.open) document.querySelectorAll('.acc-item').forEach(function(o){ if (o !== item) o.open = false; });
+    });
+  });
+
+  /* ---- Reveal al scroll ---- */
+  var els = document.querySelectorAll('.reveal');
+  setTimeout(function(){ els.forEach(function(el){ el.classList.add('is-visible'); }); }, 4000);
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('is-visible'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* ---- Altura automática del iframe ---- */
+  if (enIframe) {
+    var ultimo = 0;
+    function avisar(){
+      var h = document.documentElement.scrollHeight;
+      if (Math.abs(h - ultimo) < 2) return;
+      ultimo = h;
+      window.parent.postMessage({ type: 'puppis-gatos:height', height: h }, '*');
+    }
+    window.addEventListener('load', avisar);
+    window.addEventListener('resize', avisar);
+    document.addEventListener('toggle', avisar, true);
+    document.addEventListener('click', function(){ setTimeout(avisar, 50); }, true);
+    if (window.ResizeObserver) new ResizeObserver(avisar).observe(document.body);
+  }
+})();
+</script>
+</body>
+</html>
