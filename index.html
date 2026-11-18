@@ -252,7 +252,10 @@
   .why-card{
     background:var(--yellow-card); border-radius:16px; min-height:166px; padding:24px 12px 20px;
     text-align:center; display:flex; flex-direction:column; align-items:center;
+    transition:transform .15s ease, box-shadow .15s ease;
   }
+  a.why-card:hover{ transform:translateY(-2px); box-shadow:0 6px 14px rgba(26,72,140,.15); }
+  a.why-card:focus-visible{ outline:3px solid var(--blue-dark); outline-offset:2px; }
   .why-ic{ width:57px; height:57px; position:relative; margin-bottom:8px; }
   .why-ic--circle{ background:var(--blue-light); border-radius:50%; }
   .why-ic--programado span{ position:absolute; left:10px; top:11px; width:36px; height:33px; overflow:hidden; }
@@ -490,7 +493,7 @@
         <div><b>¿Cómo hago para que tome más agua?</b>Fuentes en movimiento, varios bebederos lejos de la comida y sumar alimento húmedo a la dieta.</div>
       </div>
       <!-- TODO: link real a la colección -->
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Urinario (23)</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/urinary?map=c,ft" class="btn btn-primary btn-sm">Ver todo Urinario</a></div>
     </article>
 
     <article class="need-panel" id="panel-esterilizado" role="tabpanel" hidden>
@@ -509,7 +512,7 @@
         <div><b>¿Engorda un gato por estar castrado?</b>No es automático: cambia el metabolismo, que gasta menos energía. Por eso conviene pasar a un alimento sterilised.</div>
         <div><b>¿Cuándo empiezo con el alimento sterilised?</b>Desde la cirugía, según indicación de tu veterinario, y de por vida.</div>
       </div>
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Esterilizados</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/esterilizado?map=c,ft" class="btn btn-primary btn-sm">Ver todo Esterilizados</a></div>
     </article>
 
     <article class="need-panel" id="panel-peso" role="tabpanel" hidden>
@@ -528,7 +531,7 @@
         <div><b>¿Cómo sé si mi gato tiene sobrepeso?</b>Deberías palpar sus costillas sin presionar fuerte y ver una cintura marcada al mirarlo desde arriba.</div>
         <div><b>¿Cuánto debería bajar por semana?</b>La bajada tiene que ser progresiva, nunca por ayuno. Consultá el plan con tu veterinario.</div>
       </div>
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Control de Peso</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/alimentos/light?map=c,c,ft" class="btn btn-primary btn-sm">Ver todo Control de Peso</a></div>
     </article>
 
     <article class="need-panel" id="panel-ansioso" role="tabpanel" hidden>
@@ -547,7 +550,7 @@
         <div><b>¿Por qué mi gato se esconde todo el día?</b>Suele ser miedo o estrés. Conviene buscar la causa: algún cambio reciente en la casa o la rutina.</div>
         <div><b>¿Sirven las feromonas sintéticas?</b>Sí, imitan señales naturales de calma felina. El efecto se nota con uso continuo, al menos 4 semanas.</div>
       </div>
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Bienestar y Calma</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/accesorios/comportamiento" class="btn btn-primary btn-sm">Ver todo Bienestar y Calma</a></div>
     </article>
 
     <article class="need-panel" id="panel-pelo" role="tabpanel" hidden>
@@ -566,7 +569,7 @@
         <div><b>¿Cuántas veces por semana hay que cepillarlo?</b>2 a 3 veces en general, todos los días en las épocas de muda estacional.</div>
         <div><b>¿La malta es necesaria siempre?</b>Ayuda a eliminar el pelo tragado. Es especialmente útil en gatos de pelo largo o semilargo.</div>
       </div>
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Cuidado del Pelaje</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/estetica-e-higiene/cepillos-guantes-y-cardinas" class="btn btn-primary btn-sm">Ver todo Cuidado del Pelaje</a></div>
     </article>
 
     <article class="need-panel" id="panel-gatito" role="tabpanel" hidden>
@@ -585,7 +588,7 @@
         <div><b>¿Hasta qué edad se le da alimento kitten?</b>Aproximadamente hasta los 12 meses, según la raza y el tamaño del gato.</div>
         <div><b>¿Qué necesita el primer día en casa?</b>El kit esencial: comida, agua, litera, un rincón tranquilo y mucha paciencia.</div>
       </div>
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Gatitos</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/kitten?map=c,ft" class="btn btn-primary btn-sm">Ver todo Gatitos</a></div>
     </article>
 
     <article class="need-panel" id="panel-senior" role="tabpanel" hidden>
@@ -604,7 +607,7 @@
         <div><b>¿Cómo sé si le duelen las articulaciones?</b>Le cuesta saltar, evita las alturas que antes usaba y se acicala menos.</div>
         <div><b>¿Cada cuánto llevarlo al veterinario?</b>Cada 6 meses a partir de los 7 años, para detectar a tiempo cualquier molestia.</div>
       </div>
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Senior</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/senior?map=c,ft" class="btn btn-primary btn-sm">Ver todo Senior</a></div>
     </article>
 
     <article class="need-panel" id="panel-indoor" role="tabpanel" hidden>
@@ -623,7 +626,7 @@
         <div><b>¿Cuántas piedras necesito si tengo 2 gatos?</b>La regla es litera = gatos + 1, ubicadas en zonas distintas para evitar tensiones.</div>
         <div><b>¿Los gatos indoor necesitan alimento diferente?</b>Sí, fórmulas con menos calorías y control de bolas de pelo por su menor actividad física.</div>
       </div>
-      <div class="need-ctas"><a href="https://www.puppis.com.ar/gato" class="btn btn-primary btn-sm">Ver todo Indoor y Multigato</a></div>
+      <div class="need-ctas"><a href="https://www.puppis.com.ar/gatos/indoor?map=c,ft" class="btn btn-primary btn-sm">Ver todo Indoor y Multigato</a></div>
     </article>
 
   </div>
@@ -671,8 +674,8 @@
   <!-- TODO: links reales -->
   <div class="container mix-foot">
     <a href="https://www.puppis.com.ar/gato" class="btn btn-primary">Armá su combo mixto</a>
-    <a href="https://www.puppis.com.ar/gato" class="btn btn-outline">Ver húmedos</a>
-    <a href="https://www.puppis.com.ar/gato" class="btn btn-outline">Ver secos</a>
+    <a href="https://www.puppis.com.ar/gatos/alimentos/humedos" class="btn btn-outline">Ver húmedos</a>
+    <a href="https://www.puppis.com.ar/gatos/alimentos/alimentos-secos" class="btn btn-outline">Ver secos</a>
   </div>
 </section>
 
@@ -694,23 +697,23 @@
     <img class="why-cat" src="img/gato-siames.webp" width="553" height="464" alt="" aria-hidden="true">
     <h2 class="why-title reveal">¿Por qué elegir Puppis?</h2>
     <div class="why-grid">
-      <div class="why-card">
+      <a class="why-card" href="https://www.puppis.com.ar/formas-de-entrega">
         <div class="why-ic"><img src="img/ico-domicilio.svg" width="56" height="57" alt=""></div>
         <b>Envío flash</b><p>Recibilo en el día en CABA y GBA</p>
-      </div>
-      <div class="why-card">
+      </a>
+      <a class="why-card" href="https://api.whatsapp.com/send?phone=5491167026320" target="_blank" rel="noopener">
         <div class="why-ic"><img src="img/ico-whatsapp-card.png" width="57" height="57" alt=""></div>
         <!-- TODO: el copy del Figma repite el de "Retiro en tienda". Confirmar bajada. -->
         <b>Ventas por Whatsapp</b><p>Comprá online, retirá en sucursal</p>
-      </div>
-      <div class="why-card">
+      </a>
+      <a class="why-card" href="https://www.puppis.com.ar/envio-programado">
         <div class="why-ic why-ic--circle why-ic--programado"><span><img src="img/ico-programado.svg" alt=""></span></div>
         <b>Envío programado</b><p>Vos tenés el control</p>
-      </div>
-      <div class="why-card">
-        <div class="why-ic why-ic--club"><img src="img/logo-puppis-club.png" width="66" height="59" alt="Puppis Club"></div>
+      </a>
+      <a class="why-card" href="https://www.puppis.com.ar/puppis-club">
+        <div class="why-ic why-ic--club"><img src="img/logo-puppis-club.png" width="66" height="59" alt=""></div>
         <b>Puppis Club</b><p>Beneficios y descuentos exclusivos</p>
-      </div>
+      </a>
     </div>
     <div class="dots" data-for=".why-grid" aria-hidden="true"></div>
 
