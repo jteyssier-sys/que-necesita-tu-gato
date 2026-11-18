@@ -81,7 +81,8 @@
 
   /* ---------- BASE ---------- */
   *,*::before,*::after{ box-sizing:border-box; }
-  html,body{ margin:0; overflow-x:hidden; }
+  html,body{ margin:0; }
+  body{ overflow-x:clip; } /* clip y no hidden: hidden convierte al body en contenedor con scroll propio y aparece una barra dentro del iframe */
   main{ overflow-x:clip; }
   .hero-cat,.need-cat,.why-cat,.mix-bowl{ height:auto; max-width:none; }
   body{
@@ -733,8 +734,11 @@
   });
 
   /* ---- Scroll a un elemento (pide al padre si está embebido) ---- */
+  /* El padre (GTM) confirma que escucha con 'puppis-gatos:ack'. Sin eso, scroll nativo. */
+  var padreEscucha = false;
+  window.addEventListener('message', function(e){ if (e.data && e.data.type === 'puppis-gatos:ack') padreEscucha = true; });
   function irA(el){
-    if (enIframe) {
+    if (enIframe && padreEscucha) {
       var top = el.getBoundingClientRect().top + window.pageYOffset;
       window.parent.postMessage({ type: 'puppis-gatos:scroll', top: top }, '*');
     } else {
